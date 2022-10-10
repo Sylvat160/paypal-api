@@ -24,6 +24,8 @@ class FortifyServiceProvider extends ServiceProvider
         //
     }
 
+    
+
     /**
      * Bootstrap any application services.
      *
@@ -35,6 +37,13 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+        Fortify::loginView(function () {
+            return view('auth.login');
+        });
+        Fortify::registerView(function () {
+            return view('auth.register');
+        });
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;

@@ -56,6 +56,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+    'clientId' => env('PAYPAL_CLIENT_ID', null),
+    'clientSecret' => env('PAYPAL_CLIENT_SECRET', null),
 
     /*
     |--------------------------------------------------------------------------

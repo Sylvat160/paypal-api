@@ -99,13 +99,13 @@ module.exports = {
         </div>
         <div class="mb-10">
             <h1 class="text-center  font-bold text-xl uppercase" style="color:red;">Pour profiter pleinement de nos services , vous devez d'abord payer les frais d'inscription.</h1>
-            <h1 class="text-center  font-bold text-xl uppercase">prix : $10 </h1>
+            <h1 class="text-center  font-bold text-xl uppercase">prix : $1 </h1>
 
         </div>
 
         <form action="{{route('paiement')}}" method="post">
             @csrf
-            <input type="hidden" name="montant" value="10">
+            <input type="hidden" name="montant" value="1">
             <div>
                 <button type="submit" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"><i class="mdi mdi-lock-outline mr-1"></i> PAYER MAINTENANT</button>
             </div>

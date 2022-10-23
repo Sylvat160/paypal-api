@@ -15,10 +15,10 @@ class PaiementController extends Controller
     {
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId(
-            'AUFdzqMO0hDO3yRMS24tG6uReqyLV8hnNcPFXzM9rehU0tvs5CyKQyk2fx_8tKxDbcaSOqWkEijUGkGi'
+            config('app.clientId')
         );
         $this->gateway->setSecret(
-            'EDLf3cWlUMALNmQhzRSwxD9maCHvKGHeo6Aac03KiWnQDDpYZCnbkAhYB9Y9gNEGIBbfHmI5sz8-exUD'
+            config('app.clientSecret')
         );
         $this->gateway->setTestMode(false);
     }

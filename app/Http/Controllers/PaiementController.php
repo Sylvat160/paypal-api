@@ -14,21 +14,26 @@ class PaiementController extends Controller
     public function __construct()
     {
         $this->gateway = Omnipay::create('PayPal_Rest');
-        $this->gateway->setClientId('AUFdzqMO0hDO3yRMS24tG6uReqyLV8hnNcPFXzM9rehU0tvs5CyKQyk2fx_8tKxDbcaSOqWkEijUGkGi');
-        $this->gateway->setSecret('EDLf3cWlUMALNmQhzRSwxD9maCHvKGHeo6Aac03KiWnQDDpYZCnbkAhYB9Y9gNEGIBbfHmI5sz8-exUD');
+        $this->gateway->setClientId(
+            'AUFdzqMO0hDO3yRMS24tG6uReqyLV8hnNcPFXzM9rehU0tvs5CyKQyk2fx_8tKxDbcaSOqWkEijUGkGi'
+        );
+        $this->gateway->setSecret(
+            'EDLf3cWlUMALNmQhzRSwxD9maCHvKGHeo6Aac03KiWnQDDpYZCnbkAhYB9Y9gNEGIBbfHmI5sz8-exUD'
+        );
         $this->gateway->setTestMode(false);
     }
 
     public function paymentHandle(Request $request)
     {
         try {
-
-            $response = $this->gateway->purchase(array(
-                'amount' => $request->montant,
-                'currency' => env('PAYPAL_CURRENCY', 'USD'),
-                'returnUrl' => url('success'),
-                'cancelUrl' => url('error')
-            ))->send();
+            $response = $this->gateway
+                ->purchase([
+                    'amount' => $request->montant,
+                    'currency' => env('PAYPAL_CURRENCY', 'USD'),
+                    'returnUrl' => url('success'),
+                    'cancelUrl' => url('error'),
+                ])
+                ->send();
 
             if ($response->isRedirect()) {
                 $response->redirect();
@@ -43,15 +48,14 @@ class PaiementController extends Controller
     public function success(Request $request)
     {
         if ($request->input('paymentId') && $request->input('PayerID')) {
-            $transaction = $this->gateway->completePurchase(array(
+            $transaction = $this->gateway->completePurchase([
                 'payer_id' => $request->input('PayerID'),
-                'transactionReference' => $request->input('paymentId')
-            ));
+                'transactionReference' => $request->input('paymentId'),
+            ]);
 
             $response = $transaction->send();
 
             if ($response->isSuccessful()) {
-
                 $arr = $response->getData();
 
                 Paiement::create([
@@ -75,6 +79,6 @@ class PaiementController extends Controller
 
     public function error()
     {
-        return 'Paiement annulé';   
+        return 'Paiement annulé';
     }
 }

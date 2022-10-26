@@ -28,6 +28,13 @@ class PaymentMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.users.payment');
+        $file = view('pdf')->render();
+        echo "<script>console.log($file)</script>";
+        // dd($file);
+        return $this->markdown('emails.users.payment')
+                    ->subject('Payment Successful')
+                    ->attachData($file, 'payment', [
+                        'mime' => 'application/pdf',
+                    ]);
     }
 }
